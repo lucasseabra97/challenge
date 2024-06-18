@@ -16,6 +16,16 @@ export const typeDef = /* GraphQL */ `
     description: String!
     keywords: [String!]
   }
+  
+  input NewMetadataInput {
+    description: String!
+    keywords: [String!]
+  }
+
+  type Mutation {
+    createItem(url: String!, pageTitle: String, metadata: NewMetadataInput!): Item!
+    removeItem(url: String!, crawledDate: String!): Boolean!
+  }
 `
 
 const mockDataDB = [
@@ -47,7 +57,7 @@ const mockDataDB = [
 export const resolvers = {
     Query: {
         // the idea would be here to call a DB instance that after would perform 
-        // some kind of query to retrieve the value based on the url and the crawledDate
+        // a query to retrieve the value based on the url and the crawledDate
         // since these 2 are the primary key 
         item: (_, args: { url: string; crawledDate: string }) => {
             const { url, crawledDate } = args;
@@ -63,5 +73,32 @@ export const resolvers = {
         items: () => {
             return mockDataDB
         }
-    }
+    },
+
+    Mutation: {
+        createItem: (_, args: { url: string; pageTitle: string; metadata: { description: string; keywords: string[] } }) => {
+            const { url, pageTitle, metadata } = args;
+            const now = new Date();
+            const newItem =  {
+                url,
+                crawledDate: now.toISOString(),
+                pageTitle,
+                wordCount: 230,
+                metadata
+            }
+            mockDataDB.push(newItem);
+
+            return newItem;
+        }
+    },
+
+    // removeItem: (_, args: { url: string; crawledDate: string }) => {
+    //     const { url, crawledDate } = args;
+    //     const itemIndex = mockDataDB.findIndex(
+    //         (entry) => entry.url === url && entry.crawledDate === crawledDate
+    //     );
+
+    //     mockDataDB.splice(itemIndex, 1);
+    //     return true;
+    // }
 }   
