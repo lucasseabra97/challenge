@@ -24,7 +24,7 @@ export const typeDef = /* GraphQL */ `
 
   type Mutation {
     createItem(url: String!, pageTitle: String, metadata: NewMetadataInput!): Item!
-    removeItem(url: String!, crawledDate: String!): Boolean!
+    removeItem(url: String!, crawledDate: String!): Boolean
   }
 `
 
@@ -89,16 +89,17 @@ export const resolvers = {
             mockDataDB.push(newItem);
 
             return newItem;
+        },
+
+        removeItem: (_, args: { url: string; crawledDate: string }) => {
+            const { url, crawledDate } = args;
+            const itemIndex = mockDataDB.findIndex(
+                (entry) => entry.url === url && entry.crawledDate === crawledDate
+            );
+    
+            mockDataDB.splice(itemIndex, 1);
+            return true;
         }
-    },
-
-    // removeItem: (_, args: { url: string; crawledDate: string }) => {
-    //     const { url, crawledDate } = args;
-    //     const itemIndex = mockDataDB.findIndex(
-    //         (entry) => entry.url === url && entry.crawledDate === crawledDate
-    //     );
-
-    //     mockDataDB.splice(itemIndex, 1);
-    //     return true;
-    // }
+    
+    }
 }   
