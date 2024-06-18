@@ -9,6 +9,7 @@
   "devDependencies": {
     "@types/aws-sdk": "^2.7.0",
     "@types/jest": "~29.5",
+    "@types/lodash": "^4.17.5",
     "@types/node": "~20",
     "@typescript-eslint/eslint-plugin": "~7.6",
     "@typescript-eslint/parser": "~7.6",
