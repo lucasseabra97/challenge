@@ -36,6 +36,8 @@
   "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
   "license": "Apache-2.0",
   "dependencies": {
+    "loadsh": "^0.0.4",
+    "lodash": "^4.17.21",
     "tslib": "~2.6"
   },
   "volta": {

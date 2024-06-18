@@ -1,3 +1,4 @@
+const _ = require('lodash');
 /**
  * Some predefined delay values (in milliseconds).
  */
@@ -31,4 +32,12 @@ function delayedHello(
 export async function greeter(name: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
   // The name parameter should be of type string. Any is used only to trigger the rule.
   return await delayedHello(name, Delays.Long);
+}
+
+// Define a type that represents nested objects, arrays, and primitives
+type NestedObject = { [key: string]: NestedObject | string | number | boolean | null | any};  // eslint-disable-line @typescript-eslint/no-explicit-any
+
+// Function to deep copy the array of objects using cloneDeep from lodash
+export function deepCopyArray(inputArray: NestedObject[]): NestedObject[] {
+  return _.cloneDeep(inputArray);
 }
